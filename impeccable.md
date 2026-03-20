@@ -1,7 +1,16 @@
 ## Design Context
 
+### Product Purpose
+A CSS background layer debugger and editor. The core workflow is:
+1. **Paste** CSS background declarations (shorthand `background` or individual properties like `background-image`, `background-color`, `background-position`, `background-size`, `background-repeat`, `background-blend-mode`, etc.)
+2. **Parse** into discrete, human-readable layers — each comma-separated layer from `background-image` is correlated with the corresponding values in `background-position`, `background-size`, etc.
+3. **Inspect & edit** each layer individually — reorder, hide/show, tweak values
+4. **Output** the modified CSS as clean, correct code to copy back
+
+The tool makes the invisible structure of complex backgrounds visible and manipulable. It is a debugging aid as much as an editor.
+
 ### Users
-Developers building for the web. They come to compose and experiment with CSS `background` layer stacks — gradients, images, patterns, blends — and copy the output into their own code. They are comfortable with technical interfaces, value precision and density over handholding, and are impatient with anything that slows them down. The output (the CSS) is the product; everything else is scaffolding.
+Developers building for the web who encounter (or write) complex multi-layer CSS backgrounds and need to understand, debug, or modify them. They paste in messy inherited code and want to see what's actually going on. They are comfortable with technical interfaces, value precision and density over handholding, and are impatient with anything that slows them down. The output (the CSS) is the product; everything else is scaffolding.
 
 ### Brand Personality
 **Crafted. Precise. Understated.**
