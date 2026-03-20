@@ -117,7 +117,8 @@ export default function Home() {
     <div className="min-h-screen flex flex-col bg-canvas text-ink">
       {/* Header */}
       <header className="px-8 h-14 flex items-center justify-between shrink-0 border-b border-line">
-        <div className="flex items-center gap-2.5">
+        <div className="flex items-center gap-3">
+          <img src="/logo.png" alt="layerly-logo" className="w-6" />
           <span className="text-xl font-semibold tracking-tight">Layerly</span>
         </div>
       </header>

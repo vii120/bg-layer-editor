@@ -16,6 +16,15 @@ export const metadata: Metadata = {
   title: 'Layerly - Lift the layers off your backgrounds',
   description:
     'CSS backgrounds made clear. Split complex backgrounds into layers and edit them visually.',
+  icons: {
+    icon: [
+      { url: '/favicon.ico' },
+      { url: '/favicon-96x96.png', sizes: '96x96', type: 'image/png' },
+      { url: '/favicon.svg', type: 'image/svg+xml' },
+    ],
+    apple: [{ url: '/apple-touch-icon.png' }],
+  },
+  manifest: '/site.webmanifest',
 }
 
 export default function RootLayout({
