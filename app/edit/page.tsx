@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { ChevronDown } from 'lucide-react'
+import { Reorder, useDragControls } from 'motion/react'
 import { cn } from '@/lib/utils'
 import { parseCssInput, type BgLayer } from '@/lib/parseCss'
 import { useCssStore } from '@/lib/store'
@@ -52,6 +53,37 @@ function extractCssVariables(css: string): { name: string; value: string }[] {
     name: m[1].trim(),
     value: m[2].trim(),
   }))
+}
+
+function DraggableLayerCard({
+  layer,
+  order,
+  total,
+  originalCss,
+  isVisible,
+  onToggleVisibility,
+}: {
+  layer: BgLayer
+  order: number
+  total: number
+  originalCss: string
+  isVisible: boolean
+  onToggleVisibility: () => void
+}) {
+  const dragControls = useDragControls()
+  return (
+    <Reorder.Item value={layer} dragListener={false} dragControls={dragControls} className="shrink-0">
+      <LayerCard
+        layer={layer}
+        order={order}
+        total={total}
+        originalCss={originalCss}
+        isVisible={isVisible}
+        onToggleVisibility={onToggleVisibility}
+        dragControls={dragControls}
+      />
+    </Reorder.Item>
+  )
 }
 
 export default function EditPage() {
@@ -120,19 +152,24 @@ export default function EditPage() {
                   </span>
                 </span>
               </h2>
-              <div className="flex-1 min-h-0 overflow-auto flex flex-col gap-2">
-                {layers.map((layer) => (
-                  <div key={layer.index} className="shrink-0">
-                    <LayerCard
-                      layer={layer}
-                      total={layers.length}
-                      originalCss={originalCss}
-                      isVisible={!hiddenLayers.has(layer.index)}
-                      onToggleVisibility={() => toggleLayer(layer.index)}
-                    />
-                  </div>
+              <Reorder.Group
+                axis="y"
+                values={layers}
+                onReorder={setLayers}
+                className="flex-1 min-h-0 overflow-auto flex flex-col gap-2"
+              >
+                {layers.map((layer, i) => (
+                  <DraggableLayerCard
+                    key={layer.index}
+                    layer={layer}
+                    order={i}
+                    total={layers.length}
+                    originalCss={originalCss}
+                    isVisible={!hiddenLayers.has(layer.index)}
+                    onToggleVisibility={() => toggleLayer(layer.index)}
+                  />
                 ))}
-              </div>
+              </Reorder.Group>
             </div>
 
             {/* Variables section */}

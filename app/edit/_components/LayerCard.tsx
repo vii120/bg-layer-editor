@@ -1,6 +1,7 @@
 'use client'
 
-import { Eye, EyeClosed } from 'lucide-react'
+import { Eye, EyeClosed, GripVertical } from 'lucide-react'
+import type { DragControls } from 'motion/react'
 import { PreviewCanvas } from '@/app/_components/PreviewCanvas'
 import type { BgLayer } from '@/lib/parseCss'
 import { cn } from '@/lib/utils'
@@ -23,25 +24,29 @@ function buildLayerCss(layer: BgLayer, originalCss: string): string {
 
 export function LayerCard({
   layer,
+  order,
   total,
   originalCss,
   isVisible,
   onToggleVisibility,
+  dragControls,
 }: {
   layer: BgLayer
+  order: number
   total: number
   originalCss: string
   isVisible: boolean
   onToggleVisibility: () => void
+  dragControls: DragControls
 }) {
   const layerCss = buildLayerCss(layer, originalCss)
 
   const displayNumber =
-    layer.index === 0
+    order === 0
       ? `1 (top)`
-      : layer.index === total - 1
+      : order === total - 1
         ? `${total} (bottom)`
-        : layer.index + 1
+        : order + 1
 
   const subProps = [
     layer.position && { label: 'position', value: layer.position },
@@ -56,13 +61,23 @@ export function LayerCard({
 
   return (
     <div
-      className={cn('rounded-md border border-line overflow-hidden bg-canvas transition-opacity', !isVisible && 'opacity-40')}
+      className={cn(
+        'rounded-md border border-line overflow-hidden bg-canvas transition-opacity select-none',
+        !isVisible && 'opacity-40',
+      )}
     >
       {/* Header row */}
       <div className="px-3.5 py-2 border-b border-line bg-surface flex items-center justify-between">
-        <span className="text-xs font-medium text-ink-muted tabular-nums">
-          {displayNumber}
-        </span>
+        <div className="flex items-center gap-2">
+          <GripVertical
+            size={14}
+            className="text-ink-muted/50 hover:text-ink-muted cursor-grab active:cursor-grabbing touch-none"
+            onPointerDown={(e) => dragControls.start(e)}
+          />
+          <span className="text-xs font-medium text-ink-muted tabular-nums">
+            {displayNumber}
+          </span>
+        </div>
         <button
           onClick={onToggleVisibility}
           className="text-ink-muted hover:text-ink transition-colors cursor-pointer"
@@ -75,7 +90,7 @@ export function LayerCard({
       {/* Body: square preview + content */}
       <div className="flex">
         {/* Square swatch */}
-        <div className="w-20 h-20 shrink-0 border-r border-line overflow-hidden">
+        <div className="w-20 min-h-20 shrink-0 border-r border-line overflow-hidden">
           <PreviewCanvas css={layerCss} className="w-full h-full" />
         </div>
 
