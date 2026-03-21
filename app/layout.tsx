@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { Space_Grotesk, Geist_Mono, Geist } from 'next/font/google'
 import Link from 'next/link'
+import { Toaster } from '@/components/ui/sonner'
 import './globals.css'
 import { cn } from '@/lib/utils'
 
@@ -58,6 +59,7 @@ export default function RootLayout({
           </Link>
         </header>
         {children}
+        <Toaster position="top-center" />
       </body>
     </html>
   )

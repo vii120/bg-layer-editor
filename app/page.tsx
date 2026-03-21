@@ -1,10 +1,12 @@
 'use client'
 
 import { useRouter } from 'next/navigation'
+import { toast } from 'sonner'
 import { CssEditor } from './CssEditor'
 import { PreviewCanvas } from './_components/PreviewCanvas'
 import { EXAMPLES } from '@/lib/examples'
 import { useCssStore } from '@/lib/store'
+import { parseCssInput } from '@/lib/parseCss'
 
 export default function Home() {
   const { css, setCss } = useCssStore()
@@ -12,6 +14,11 @@ export default function Home() {
   const router = useRouter()
 
   function handleAnalyse() {
+    const layers = parseCssInput(css)
+    if (!layers) {
+      toast.error('No background properties found in the input.')
+      return
+    }
     router.push('/edit')
   }
 
