@@ -6,7 +6,11 @@ import { useRouter } from 'next/navigation'
 import { ChevronDown } from 'lucide-react'
 import { Reorder, useDragControls } from 'motion/react'
 import { cn } from '@/lib/utils'
-import { parseCssInput, reconstructBackground, type BgLayer } from '@/lib/parseCss'
+import {
+  parseCssInput,
+  reconstructBackground,
+  type BgLayer,
+} from '@/lib/parseCss'
 import { useCssStore } from '@/lib/store'
 import { PreviewCanvas } from '@/app/_components/PreviewCanvas'
 import { LayerCard } from './_components/LayerCard'
@@ -30,9 +34,10 @@ function buildFilteredPreviewCss(
   const bgValue = reconstructBackground(visibleLayers)
 
   const blendModes = visibleLayers.map((l) => l.blendMode).filter(Boolean)
-  const blendModeDecl = blendModes.length > 0
-    ? `; background-blend-mode: ${blendModes.join(', ')}`
-    : ''
+  const blendModeDecl =
+    blendModes.length > 0
+      ? `; background-blend-mode: ${blendModes.join(', ')}`
+      : ''
 
   return `div { ${customProps ? `${customProps}; ` : ''}background: ${bgValue}${blendModeDecl} }`
 }
@@ -65,7 +70,12 @@ function DraggableLayerCard({
 }) {
   const dragControls = useDragControls()
   return (
-    <Reorder.Item value={layer} dragListener={false} dragControls={dragControls} className="shrink-0">
+    <Reorder.Item
+      value={layer}
+      dragListener={false}
+      dragControls={dragControls}
+      className="shrink-0"
+    >
       <LayerCard
         layer={layer}
         order={order}
@@ -105,8 +115,14 @@ export default function EditPage() {
     setLayers(parsed)
   }, [stored])
 
-  function updateLayer(layerIndex: number, field: keyof BgLayer, value: string) {
-    setLayers((prev) => prev!.map((l) => l.index === layerIndex ? { ...l, [field]: value } : l))
+  function updateLayer(
+    layerIndex: number,
+    field: keyof BgLayer,
+    value: string,
+  ) {
+    setLayers((prev) =>
+      prev!.map((l) => (l.index === layerIndex ? { ...l, [field]: value } : l)),
+    )
   }
 
   function toggleLayer(index: number) {
@@ -125,7 +141,7 @@ export default function EditPage() {
 
   return (
     <main className="md:h-[calc(100dvh-3.5rem)] w-full mx-auto px-8 py-10 flex flex-col-reverse md:flex-row gap-8 bg-canvas text-ink">
-      {(error || !layers) ? (
+      {error || !layers ? (
         <div className="mx-auto text-sm text-ink-muted py-16 text-center">
           <p>{error}</p>
           <Link
@@ -164,7 +180,9 @@ export default function EditPage() {
                     originalCss={originalCss}
                     isVisible={!hiddenLayers.has(layer.index)}
                     onToggleVisibility={() => toggleLayer(layer.index)}
-                    onUpdate={(field, value) => updateLayer(layer.index, field, value)}
+                    onUpdate={(field, value) =>
+                      updateLayer(layer.index, field, value)
+                    }
                   />
                 ))}
               </Reorder.Group>
@@ -220,7 +238,10 @@ export default function EditPage() {
               </span>
               <div className="flex items-center gap-2">
                 <button
-                  onClick={() => { setCss(''); router.push('/') }}
+                  onClick={() => {
+                    setCss('')
+                    router.push('/')
+                  }}
                   className="text-xs px-3 py-1.5 rounded border border-line bg-canvas hover:bg-surface transition-colors text-ink-muted cursor-pointer font-mono"
                 >
                   + New
@@ -230,7 +251,7 @@ export default function EditPage() {
             </div>
             <PreviewCanvas
               css={previewCss}
-              className="w-2/3 min-w-100 aspect-square m-auto rounded-md overflow-hidden bg-surface border border-line"
+              className="w-full max-w-100 md:w-2/3 md:min-w-80 md:max-w-200 aspect-square m-auto rounded-md overflow-hidden bg-surface border border-line"
             />
           </div>
         </>
