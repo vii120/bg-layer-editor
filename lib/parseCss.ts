@@ -151,12 +151,35 @@ export function parseCssInput(input: string): BgLayer[] | null {
   if (!bgShorthand && !bgImage && !bgColor) return null
 
   if (bgShorthand) {
-    // background shorthand: each comma-separated segment is a full layer
+    // background shorthand: each comma-separated segment is a full layer.
+    // Also pick up any separate background-* properties that supplement the shorthand
+    // (e.g. `background-size` declared alongside a `background:` shorthand).
     const layers = splitTopLevelCommas(bgShorthand)
+    const count = layers.length
+
+    const positions = bgPosition ? splitTopLevelCommas(bgPosition) : []
+    const sizes = bgSize ? splitTopLevelCommas(bgSize) : []
+    const repeats = bgRepeat ? splitTopLevelCommas(bgRepeat) : []
+    const attachments = bgAttachment ? splitTopLevelCommas(bgAttachment) : []
+    const origins = bgOrigin ? splitTopLevelCommas(bgOrigin) : []
+    const clips = bgClip ? splitTopLevelCommas(bgClip) : []
+    const blendModes = bgBlendMode ? splitTopLevelCommas(bgBlendMode) : []
+
+    const cycle = <T,>(arr: T[], i: number): T | undefined =>
+      arr.length > 0 ? arr[i % arr.length] : undefined
+
     return layers.map((raw, i) => ({
       index: i,
       raw,
       type: detectLayerType(raw),
+      position: cycle(positions, i),
+      size: cycle(sizes, i),
+      repeat: cycle(repeats, i),
+      attachment: cycle(attachments, i),
+      origin: cycle(origins, i),
+      clip: cycle(clips, i),
+      blendMode: cycle(blendModes, i),
+      color: i === count - 1 ? bgColor : undefined,
     }))
   }
 
@@ -198,8 +221,10 @@ export function parseCssInput(input: string): BgLayer[] | null {
 export function reconstructBackground(layers: BgLayer[]): string {
   return layers.map((l) => {
     const parts: string[] = [l.raw]
-    if (l.position) {
-      parts.push(l.size ? `${l.position} / ${l.size}` : l.position)
+    if (l.position || l.size) {
+      // `/ size` must follow a position in the shorthand; fall back to 0% 0% if unset
+      const pos = l.position ?? '0% 0%'
+      parts.push(l.size ? `${pos} / ${l.size}` : pos)
     }
     if (l.repeat) parts.push(l.repeat)
     if (l.attachment) parts.push(l.attachment)
