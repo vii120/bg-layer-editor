@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { ChevronDown } from 'lucide-react'
 import { Reorder, useDragControls } from 'motion/react'
 import { cn } from '@/lib/utils'
@@ -80,7 +81,8 @@ function DraggableLayerCard({
 }
 
 export default function EditPage() {
-  const { css: stored } = useCssStore()
+  const { css: stored, setCss } = useCssStore()
+  const router = useRouter()
   const [originalCss, setOriginalCss] = useState('')
   const [layers, setLayers] = useState<BgLayer[] | null>(null)
   const [error, setError] = useState<string | null>(null)
@@ -216,7 +218,15 @@ export default function EditPage() {
               <span className="text-sm font-semibold uppercase tracking-wider text-ink-muted">
                 Preview
               </span>
-              <OutputCss layers={visibleLayers} originalCss={originalCss} />
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={() => { setCss(''); router.push('/') }}
+                  className="text-xs px-3 py-1.5 rounded border border-line bg-canvas hover:bg-surface transition-colors text-ink-muted cursor-pointer font-mono"
+                >
+                  + New
+                </button>
+                <OutputCss layers={visibleLayers} originalCss={originalCss} />
+              </div>
             </div>
             <PreviewCanvas
               css={previewCss}
