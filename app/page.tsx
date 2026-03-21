@@ -12,7 +12,7 @@ export default function Home() {
   const router = useRouter()
 
   function handleAnalyse() {
-    sessionStorage.setItem('layerly-css', css)
+    sessionStorage.setItem('layer-css', css)
     router.push('/edit')
   }
 
@@ -27,9 +27,8 @@ export default function Home() {
             mystery solved.
           </h1>
           <p className="text-lg leading-relaxed text-ink-muted">
-            Break your CSS backgrounds into clear, editable layers.
-            <br />
-            No more guessing — just see and change every detail.
+            Split, break down, edit, and visualize multiple CSS background
+            layers in a simple, intuitive way
           </p>
         </div>
 
@@ -55,15 +54,16 @@ export default function Home() {
                 Preview
               </span>
               <div className="h-64 rounded-md overflow-hidden relative border border-line">
-                {hasInput
-                  ? (
-                      <PreviewCanvas css={css} className="absolute inset-0 w-full h-full" />
-                    )
-                  : (
-                      <div className="absolute inset-0 flex items-center justify-center text-sm select-none text-ink-muted">
-                        Preview appears here
-                      </div>
-                    )}
+                {hasInput ? (
+                  <PreviewCanvas
+                    css={css}
+                    className="absolute inset-0 w-full h-full"
+                  />
+                ) : (
+                  <div className="absolute inset-0 flex items-center justify-center text-sm select-none text-ink-muted">
+                    Preview appears here
+                  </div>
+                )}
               </div>
             </div>
           </div>
@@ -81,7 +81,7 @@ export default function Home() {
         <section id="examples">
           <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1 mb-5">
             <p className="font-semibold uppercase tracking-wider text-ink-muted">
-              Start with an example
+              Try an example
             </p>
             <p className="text-xs text-ink-muted">
               Patterns from{' '}
@@ -97,7 +97,7 @@ export default function Home() {
             </p>
           </div>
           <div className="grid grid-cols-3 gap-4">
-            {EXAMPLES.map(ex => (
+            {EXAMPLES.map((ex) => (
               <button
                 key={ex.id}
                 onClick={() => setCss(ex.css)}
@@ -119,7 +119,7 @@ export default function Home() {
       </main>
 
       <footer className="max-w-5xl w-full mx-auto px-8 py-6 mt-auto border-t border-line text-ink-muted">
-        <p className="text-xs">Layerly</p>
+        <p className="text-xs">bg.layers</p>
       </footer>
     </div>
   )

@@ -1,6 +1,6 @@
 {
-  "name": "Layerly",
-  "short_name": "Layerly",
+  "name": "bg.layers",
+  "short_name": "bg.layers",
   "icons": [
     {
       "src": "/web-app-manifest-192x192.png",

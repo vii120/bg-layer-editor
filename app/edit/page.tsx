@@ -61,7 +61,7 @@ export default function EditPage() {
   const [varsOpen, setVarsOpen] = useState(true)
 
   useEffect(() => {
-    const stored = sessionStorage.getItem('layerly-css')
+    const stored = sessionStorage.getItem('layer-css')
     if (!stored) {
       setError('No CSS found. Go back and paste some CSS.')
       return
@@ -151,7 +151,10 @@ export default function EditPage() {
                   </h2>
                   <ChevronDown
                     size={12}
-                    className={cn('ml-auto text-ink-muted transition-transform', !varsOpen && '-rotate-90')}
+                    className={cn(
+                      'ml-auto text-ink-muted transition-transform',
+                      !varsOpen && '-rotate-90',
+                    )}
                   />
                 </button>
                 {varsOpen && (
