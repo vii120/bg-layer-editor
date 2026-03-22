@@ -1,5 +1,10 @@
 import type { Metadata } from 'next'
-import { Space_Grotesk, Geist_Mono, Geist } from 'next/font/google'
+import {
+  Space_Grotesk,
+  Geist_Mono,
+  Geist,
+  Bricolage_Grotesque,
+} from 'next/font/google'
 import Link from 'next/link'
 import { Toaster } from '@/components/ui/sonner'
 import { GoogleAnalytics } from '@next/third-parties/google'
@@ -10,6 +15,11 @@ const geist = Geist({ subsets: ['latin'], variable: '--font-sans' })
 
 const spaceGrotesk = Space_Grotesk({
   variable: '--font-space-grotesk',
+  subsets: ['latin'],
+})
+
+const bricolage = Bricolage_Grotesque({
+  variable: '--font-bricolage',
   subsets: ['latin'],
 })
 
@@ -46,6 +56,7 @@ export default function RootLayout({
         'antialiased',
         spaceGrotesk.variable,
         geistMono.variable,
+        bricolage.variable,
         'font-sans',
         geist.variable,
       )}
@@ -61,7 +72,9 @@ export default function RootLayout({
         </header>
         {children}
         <Toaster position="top-center" />
-        {process.env.NODE_ENV === 'production' && <GoogleAnalytics gaId="G-E5E297PGYE" />}
+        {process.env.NODE_ENV === 'production' && (
+          <GoogleAnalytics gaId="G-E5E297PGYE" />
+        )}
       </body>
     </html>
   )

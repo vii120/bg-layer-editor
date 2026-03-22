@@ -27,7 +27,7 @@ export default function Home() {
       <main className="flex-1 max-w-5xl w-full mx-auto px-8 py-16 space-y-16">
         {/* Intro */}
         <div className="text-center flex flex-col items-center gap-4">
-          <h1 className="text-3xl md:text-[2.5rem] font-semibold tracking-tight leading-relaxed relative">
+          <h1 className="text-3xl md:text-[2.5rem] font-semibold tracking-tight leading-relaxed relative font-heading">
             Break down
             <br />
             CSS backgrounds,
