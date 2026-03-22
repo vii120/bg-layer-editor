@@ -47,7 +47,7 @@ export default function Home() {
 
         {/* Editor */}
         <div>
-          <div className="grid grid-cols-2 gap-5 mb-4">
+          <div className="grid md:grid-cols-2 gap-5 mb-4">
             {/* Input */}
             <div className="flex flex-col gap-2">
               <span className="font-semibold uppercase tracking-wider text-ink-muted">
@@ -84,7 +84,7 @@ export default function Home() {
           <button
             disabled={!hasInput}
             onClick={handleAnalyse}
-            className="px-5 py-2.5 rounded-md text-sm font-medium transition-colors border bg-surface text-ink-muted border-line cursor-not-allowed enabled:bg-accent enabled:text-white enabled:border-transparent enabled:cursor-pointer"
+            className="block mx-auto md:mx-0 px-5 py-2.5 rounded-full text-sm font-medium transition-colors border bg-surface text-ink-muted border-line cursor-not-allowed enabled:bg-indigo-400 enabled:text-white enabled:border-transparent enabled:cursor-pointer"
           >
             Analyse layers →
           </button>
@@ -95,7 +95,7 @@ export default function Home() {
           <p className="font-semibold uppercase tracking-wider text-ink-muted mb-5">
             Try an example
           </p>
-          <div className="grid grid-cols-3 gap-4">
+          <div className="grid md:grid-cols-3 gap-4">
             {EXAMPLES.map((ex) => (
               <button
                 key={ex.id}
@@ -112,7 +112,7 @@ export default function Home() {
                   <div className="flex items-baseline justify-between gap-2">
                     <p className="text-sm font-medium">{ex.label}</p>
                     {ex.note && (
-                      <span className="text-[10px] text-ink-muted shrink-0">
+                      <span className="text-xs text-ink-muted shrink-0">
                         {ex.note}
                       </span>
                     )}
@@ -122,7 +122,7 @@ export default function Home() {
                     target="_blank"
                     rel="noopener noreferrer"
                     onClick={(e) => e.stopPropagation()}
-                    className="text-[10px] text-ink-muted underline underline-offset-2 hover:text-ink transition-colors"
+                    className="text-xs text-ink-muted underline underline-offset-2 hover:text-ink transition-colors"
                   >
                     via {ex.source.name}
                   </a>
@@ -133,8 +133,7 @@ export default function Home() {
         </section>
       </main>
 
-      <footer className="max-w-5xl w-full mx-auto px-8 py-6 mt-auto border-t border-line text-ink-muted flex items-center justify-between text-xs">
-        <span className="font-semibold tracking-tight text-ink">bg.layers</span>
+      <footer className="max-w-5xl w-full mx-auto px-8 py-6 mt-auto border-t border-line text-ink-muted flex items-center justify-end text-sm">
         <div className="flex items-center gap-4">
           <a
             href="https://github.com/vii120/css-bg-layers"
