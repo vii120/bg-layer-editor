@@ -26,11 +26,19 @@ export default function Home() {
     <div className="min-h-screen flex flex-col bg-canvas text-ink">
       <main className="flex-1 max-w-5xl w-full mx-auto px-8 py-16 space-y-16">
         {/* Intro */}
-        <div className="text-center">
-          <h1 className="text-[2.5rem] font-semibold tracking-tight leading-snug mb-4">
-            Layer by layer,
+        <div className="text-center flex flex-col items-center gap-4">
+          <h1 className="text-3xl md:text-[2.5rem] font-semibold tracking-tight leading-relaxed relative">
+            Break down
             <br />
-            mystery solved.
+            CSS backgrounds,
+            <br />
+            <span className="relative z-1 px-2  before:absolute before:inset-0 before:rounded-sm before:bg-linear-[80deg,var(--color-blue-300),var(--color-blue-100)_5%_30%,var(--color-blue-200)_50%_95%,var(--color-blue-400)] before:-skew-1 before:-z-1">
+              layer by layer
+            </span>
+            {/* Deco */}
+            <div className="absolute -top-5 right-9/10 w-10 aspect-square bg-conic-[from_270deg_at_bottom_2px_right_2px,transparent_25%,var(--color-amber-400)_0] bg-size-[15px_15px] bg-center -rotate-15 opacity-75 transform-[translateZ(0)]"></div>
+            <div className="absolute top-1/3 left-full ml-6 w-10 aspect-square bg-radial-[circle,var(--color-lime-500)_30%,transparent_0] bg-size-[15px_15px] bg-center rotate-15 opacity-75 transform-[translateZ(0)]"></div>
+            <div className="absolute bottom-0 right-full w-[45px] aspect-square bg-conic-[var(--color-red-400)_25%,transparent_25%_50%,var(--color-red-400)_50%_75%,transparent_75%] bg-size-[30px_30px] -rotate-20 opacity-75 transform-[translateZ(0)]"></div>
           </h1>
           <p className="text-lg leading-relaxed text-ink-muted">
             Split, visualize, and edit every CSS background layer with ease.
