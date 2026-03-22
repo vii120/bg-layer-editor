@@ -142,7 +142,7 @@ export default function EditPage() {
     : ''
 
   return (
-    <main className="md:h-[calc(100dvh-3.5rem)] w-full mx-auto px-8 py-10 flex flex-col-reverse md:flex-row gap-8 bg-canvas text-ink">
+    <main className="md:h-[calc(100dvh-3.5rem)] w-full mx-auto px-4 md:px-8 py-6 md:py-10 flex flex-col-reverse md:flex-row gap-6 md:gap-8 bg-canvas text-ink">
       {error || !layers ? (
         <div className="mx-auto text-sm text-ink-muted py-16 text-center">
           <p>{error}</p>
@@ -258,7 +258,7 @@ export default function EditPage() {
             </div>
             <PreviewCanvas
               css={previewCss}
-              className="w-full max-w-100 md:w-2/3 md:min-w-80 md:max-w-200 aspect-square m-auto rounded-md overflow-hidden bg-surface border border-line"
+              className="w-full max-w-72 md:w-2/3 md:min-w-80 md:max-w-200 aspect-square m-auto rounded-md overflow-hidden bg-surface border border-line"
             />
           </div>
         </>

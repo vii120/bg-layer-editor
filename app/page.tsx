@@ -24,7 +24,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen flex flex-col bg-canvas text-ink">
-      <main className="flex-1 max-w-5xl w-full mx-auto px-8 py-16 space-y-16">
+      <main className="flex-1 max-w-5xl w-full mx-auto px-4 md:px-8 py-10 md:py-16 space-y-12 md:space-y-16">
         {/* Intro */}
         <div className="text-center flex flex-col items-center gap-4">
           <h1 className="text-3xl md:text-[2.5rem] font-semibold tracking-tight leading-relaxed relative font-heading">
@@ -73,8 +73,10 @@ export default function Home() {
                     className="absolute inset-0 w-full h-full"
                   />
                 ) : (
-                  <div className="absolute inset-0 flex items-center justify-center text-sm select-none text-ink-muted">
-                    Preview appears here
+                  <div className="absolute inset-0 flex items-center justify-center text-sm select-none text-ink-muted/60 bg-[repeating-conic-gradient(var(--color-surface)_0%_25%,transparent_0%_50%)] bg-size-[20px_20px]">
+                    <span className="bg-canvas/80 backdrop-blur-sm px-2.5 py-1 rounded text-xs text-ink-muted">
+                      paste CSS to preview
+                    </span>
                   </div>
                 )}
               </div>
@@ -84,9 +86,12 @@ export default function Home() {
           <button
             disabled={!hasInput}
             onClick={handleAnalyse}
-            className="block mx-auto md:mx-0 px-5 py-2.5 rounded-full text-sm font-medium transition-colors border bg-surface text-ink-muted border-line cursor-not-allowed enabled:bg-indigo-400 enabled:text-white enabled:border-transparent enabled:cursor-pointer"
+            className="group block mx-auto md:mx-0 px-5 py-2.5 rounded-full text-sm font-medium transition-all border bg-surface text-ink-muted border-line cursor-not-allowed enabled:bg-indigo-400 enabled:text-white enabled:border-transparent enabled:cursor-pointer enabled:active:scale-[0.97]"
           >
-            Analyse layers →
+            Analyse layers{' '}
+            <span className="inline-block transition-transform group-enabled:group-hover:translate-x-0.5">
+              →
+            </span>
           </button>
         </div>
 
@@ -95,45 +100,51 @@ export default function Home() {
           <p className="font-semibold uppercase tracking-wider text-ink-muted mb-5">
             Try an example
           </p>
-          <div className="grid md:grid-cols-3 gap-4">
-            {EXAMPLES.map((ex) => (
-              <button
-                key={ex.id}
-                onClick={() => setCss(ex.css)}
-                className="text-left overflow-hidden transition-colors group border border-line rounded-md cursor-pointer"
-              >
-                <div className="w-full aspect-video relative overflow-hidden">
-                  <PreviewCanvas
-                    css={ex.css}
-                    className="absolute inset-0 w-full h-full transition-transform duration-300 group-hover:scale-103"
-                  />
-                </div>
-                <div className="px-3.5 py-3 transition-colors border-t border-line bg-canvas">
-                  <div className="flex items-baseline justify-between gap-2">
-                    <p className="text-sm font-medium">{ex.label}</p>
-                    {ex.note && (
-                      <span className="text-xs text-ink-muted shrink-0">
-                        {ex.note}
-                      </span>
-                    )}
+          <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4">
+            {EXAMPLES.map((ex) => {
+              const layerCount = parseCssInput(ex.css)?.length ?? 0
+              return (
+                <button
+                  key={ex.id}
+                  onClick={() => setCss(ex.css)}
+                  className="text-left overflow-hidden transition-colors group border border-line rounded-md cursor-pointer"
+                >
+                  <div className="w-full aspect-video relative overflow-hidden">
+                    <PreviewCanvas
+                      css={ex.css}
+                      className="absolute inset-0 w-full h-full transition-transform duration-300 group-hover:scale-103"
+                    />
+                    <span className="absolute top-2 right-2 text-xs font-mono px-1.5 py-0.5 rounded bg-black/30 text-white/80 backdrop-blur-sm tabular-nums">
+                      {layerCount} layers
+                    </span>
                   </div>
-                  <a
-                    href={ex.source.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    onClick={(e) => e.stopPropagation()}
-                    className="text-xs text-ink-muted underline underline-offset-2 hover:text-ink transition-colors"
-                  >
-                    via {ex.source.name}
-                  </a>
-                </div>
-              </button>
-            ))}
+                  <div className="px-3.5 py-3 transition-colors border-t border-line bg-canvas">
+                    <div className="flex items-baseline justify-between gap-2">
+                      <p className="text-sm font-medium">{ex.label}</p>
+                      {ex.note && (
+                        <span className="text-xs text-ink-muted shrink-0">
+                          {ex.note}
+                        </span>
+                      )}
+                    </div>
+                    <a
+                      href={ex.source.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={(e) => e.stopPropagation()}
+                      className="text-xs text-ink-muted underline underline-offset-2 hover:text-ink transition-colors"
+                    >
+                      via {ex.source.name}
+                    </a>
+                  </div>
+                </button>
+              )
+            })}
           </div>
         </section>
       </main>
 
-      <footer className="max-w-5xl w-full mx-auto px-8 py-6 mt-auto border-t border-line text-ink-muted flex items-center justify-end text-sm">
+      <footer className="max-w-5xl w-full mx-auto px-4 md:px-8 py-6 mt-auto border-t border-line text-ink-muted flex items-center justify-end text-sm">
         <div className="flex items-center gap-4">
           <a
             href="https://github.com/vii120/css-bg-layers"
